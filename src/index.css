@@ -1,5 +1,24 @@
-body {
+*, *::before, *::after{
+  box-sizing: border-box;
+}
+html{
+  scroll-behavior: smooth;
+}
+li{
+  padding: 0;
   margin: 0;
+  list-style: none;
+
+}
+a{
+  text-decoration: none;
+  color: inherit;
+}
+body,h1,h2,h3,h4,p,figure,blockquote,dl,dd{
+  margin: 0;
+}
+
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -10,4 +29,36 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+/* .dropdown-open{
+  animation: openup ease-in-out .70s forwards;
+
+  
+}
+@keyframes openup {
+  0%{
+    transform: translateX(0);
+    background-color: red;
+  }
+  100%{background-color: blue; transform: translateX(20px)};
+} */
+
+.dropdown-enter {
+  opacity: 0;
+  transform: scale(0.9);
+  transform: translateY(-20px);
+}
+.dropdown-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.dropdown-exit {
+  opacity: 1;
+}
+.dropdown-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transform: translateY(-20px);
+  transition: opacity 300ms, transform 300ms;
 }
