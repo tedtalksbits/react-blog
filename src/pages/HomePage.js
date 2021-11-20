@@ -24,6 +24,8 @@ const HomePage = () => {
                <Button width='content' href="#home-post">Post An Article</Button>
             </div>
          </Page>
+
+         {/* add psot functionality */}
          <Page id="home-post">
             <Form>
                <BigHeading>Post an Article</BigHeading>
