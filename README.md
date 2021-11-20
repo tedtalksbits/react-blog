@@ -1,6 +1,6 @@
 # React Blog!
 
-## This is blog app that was built using :
+## This is a blog app that was built using :
 
 ### Front end
 - React (CRA)
