@@ -11,6 +11,7 @@ import { darkTheme, lightTheme } from './data/appThemes';
 import Switch from './components/Switch';
 import useLocalStorageState from 'use-local-storage-state';
 import bgImgage from './images/gradbg.png'
+import Edit from './pages/Edit';
 const GlobalStyles = createGlobalStyle`
 
 body {
@@ -85,6 +86,7 @@ function App() {
             <Route path="/article/:id" element={<Article />} />
             <Route path="/article-list" element={<ArticleList />} />
             <Route path="/about" element={<About />} />
+            <Route path="/edit" element={<Edit />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </BlogApp>

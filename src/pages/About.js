@@ -23,18 +23,21 @@ const About = () => {
          <h2>Technologies Used:</h2>
          <ul>
 
-            <li><h3>✧React</h3></li>
+            <li><h3>⚛️React</h3></li>
             <ul>
                <li>UseState</li>
                <li>UseEffect</li>
             </ul>
-            <li><h3>✧JS</h3></li>
+            <li><h3>📜JS</h3></li>
             <ul>
                <li>Fetch</li>
                <li>ES6</li>
             </ul>
-            <li><h3>✧Node & Express</h3></li>
-            <li><h3>✧MongoDB</h3></li>
+            <li><h3>𝌔Node & Express</h3></li>
+            <ul>
+               <li>Rest API</li>
+            </ul>
+            <li><h3>💽MongoDB</h3></li>
             <ul>
                <li>Mongoose</li>
             </ul>

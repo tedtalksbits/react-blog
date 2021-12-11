@@ -10,14 +10,21 @@ const ArticleList = () => {
    const [isLoading, setIsLoading] = useState(true);
 
    const fetchArticles = async () => {
-      const res = await fetch(API, {
-         method: 'GET'
-      })
-      const req = await res.json()
-      console.log(req);
-      setData(req)
-      setIsLoading(false)
+      try {
+         const res = await fetch(API, {
+            method: 'GET'
+         })
+         const result = await res.json()
+         // console.log(result);
+         setData(result)
+         setIsLoading(false)
+      } catch (error) {
+         console.log(error);
+      }
+
    }
+
+
 
    useEffect(() => {
       fetchArticles()
@@ -25,11 +32,14 @@ const ArticleList = () => {
    if (isLoading) {
       return <h1>...loading</h1>
    }
+   if (data == false) {
+      return <h1>no data</h1>
+   }
    return (
 
       <div className='container-padding'>
          <BigHeading>Article List</BigHeading>
-         <ShowArticles articles={data} />
+         <ShowArticles articles={data} setData={setData} />
       </div>
    )
 }

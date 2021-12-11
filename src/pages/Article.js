@@ -5,8 +5,11 @@ import { BigHeading } from "../components/bigHeading";
 import { useEffect, useState } from "react";
 import Comment from "../components/Comment";
 import ShowArticles from "../components/ShowArticles";
-import Anime from "react-anime";
-import Chevron from "../components/Chevron";
+import { Link } from "../components/formElements";
+import ImageViewer from "../components/ImageViewer";
+import AnimatedAlert from "../components/AnimatedAlert";
+import MarkdownRenderer from "../components/MarkdownRenderer";
+import Editor from "../components/Editor";
 
 const FullBleed = styled.div`
 
@@ -33,14 +36,16 @@ const FullBleed = styled.div`
    }
 
 `
+const ArticleTextContent = styled.article`
+   min-height: 50vh;
+`
 const ArticleContainer = styled.div`
-  
-  p.content{
-     margin: 7rem 0 2rem;
-     font-size: 1.5rem;
-  }
+  z-index: 1;
+
   p.author{
      margin: 1.2rem 0 3rem;
+     color: ${({ theme }) => theme.textalpha2};
+     text-decoration: underline;
   }
   span{
      padding: 6px 12px;
@@ -62,25 +67,8 @@ const ArticleContainer = styled.div`
    }
    .view-controls{
       width: 100%;
-      /* background: red; */
       text-align: center;
-      &>i{
-         color: ${({ theme }) => theme.primary};
-         background: ${({ theme }) => theme.white};
-         margin:  0 1rem;
-         padding: 5px;
-         height: 3rem;
-         width: 3rem;
-         border-radius: 6px;
-         cursor: pointer;
-         transition: all cubic-bezier(0.175, 0.885, 0.32, 1.275) .2s;
-         font-size: 2rem;
-         :active{
-            color: white;
-            width: 3.2rem;
-            height: 3.2rem;
-         }
-      }
+      
    }
    .chevron-container{
       display: flex;
@@ -101,30 +89,41 @@ const ArticleContainer = styled.div`
    }
 `
 
-const ArticlesImgsSection = styled.section`
-   margin: 16rem 0;
+const ArticleCoverImg = styled.img`
+   &.article-cover{height: 350px;}
+
 `
+const ArticleButtons = styled.div`
+   display: flex;
+   justify-content: space-between;
+`
+
+
 const Article = () => {
    let { id } = useParams();
    const API = `http://localhost:5020/articles/${id}`
    const [data, setData] = useState([])
    const [articleImages, setArticleImages] = useState([]);
    const [allArticles, setAllArticles] = useState([])
-   const [imgListView, setImgListView] = useState(false)
+   const [deleteMsg, setDeleteMsg] = useState("");
+   const [showEditor, setShowEditor] = useState(false);
+
+
+
    const fetchArticle = async () => {
 
       try {
          const res = await fetch(API, {
             method: 'GET'
          })
-         const req = await res.json()
-         setData(req)
-         setArticleImages(req.additional_img)
+         const result = await res.json()
+         setData(result)
+         setArticleImages(result.additional_img)
+         // console.log(result.additional_img);
 
       } catch (error) {
          console.log(error)
       }
-
    }
 
    const fetchAllArticles = async () => {
@@ -142,6 +141,27 @@ const Article = () => {
       }
    }
 
+   const deleteArticle = async () => {
+
+      const delArticle = window.confirm("are your sure?");
+
+      if (delArticle) {
+
+         try {
+            const res = await fetch(API, {
+               method: 'DELETE'
+            })
+            // const result = await res.json();
+            // console.log(result)
+            setData('')
+            setDeleteMsg("Article Deleted Successfully!")
+         } catch (error) {
+            console.log(error);
+         }
+      }
+      else return
+   }
+
 
    const filteredData = (arrays, id) => {
       return arrays.filter(array => array._id !== id)
@@ -153,81 +173,91 @@ const Article = () => {
 
    }, [id])
 
-   const [count, setCount] = useState(0);
-
-   const handleIncr = () => {
-      count !== articleImages.length - 1 && setCount(count + 1);
-      console.log(articleImages.length);
+   //editor
+   const closeEditor = () => {
+      setShowEditor(false)
    }
-   const handleDecr = () => {
-      count > 0 && setCount(count - 1);
+   const openEditor = () => {
+      setShowEditor(true)
    }
 
-
-
-
-   return (
-      <>
-         <FullBleed className='full-bleed article-image' >
-            <img src={data.img} alt='article' />
-         </FullBleed>
-
-         <ArticleContainer className='container-padding article-container'>
-            <Anime
-               opacity={[0, 1]}
-               translateY={['0', '1em']}
-               delay={(e, i) => i * 100}
-            >
-               <BigHeading>{data.title}</BigHeading>
-               <p className='content'>{data.content}</p>
-               <p className='author'>{data.author}</p>
-            </Anime>
-
-            <ArticlesImgsSection className="articles-imgs-section">
-
-               <div className="view-controls">
-                  <i class='bx bxs-card' onClick={() => setImgListView(true)}></i>
-                  <i className='bx bxs-dock-right' onClick={() => setImgListView(false)}></i>
-               </div>
-
-               {imgListView ?
-
-
-                  <div className="article-imgs" >
-                     <Anime opacity={[0, 1]} translateY={['0', '1em']} delay={(e, i) => i * 1000}>
-
-                        {articleImages.map((artImg, key) => (
-                           <img key={key} src={artImg} alt="article" />
-                        ))}
-                     </Anime>
-                  </div>
-
-                  :
-                  <>
-                     <div className="chevron-container">
-                        <Chevron clickFunction={handleDecr} />
-                        <Chevron clickFunction={handleIncr} opposite={true} />
-                     </div>
-
-                     <p style={{ textAlign: 'center' }}>{count + 1}/{articleImages.length}</p>
-                     <div className="container">
-                        <img key='1' src={articleImages[count]} alt="article" />
-                     </div>
-                  </>
-               }
-            </ArticlesImgsSection>
-
-
-         </ArticleContainer>
-         <div className="container-padding">
-
-            <Comment comments={data.comments} id={data._id} setData={setData} />
+   if (!data) {
+      return (
+         <>
+            <AnimatedAlert >
+               <p>{deleteMsg}</p>
+            </AnimatedAlert>
             <h1>Other Articles</h1>
             <ShowArticles articles={filteredData(allArticles, id)} />
-         </div>
+         </>
+      )
+   }
+   if (showEditor) {
+      return (
+         <>
+            <Link
+               placement="right"
+               smallPadding={true}
+               style={{ borderRadius: '1000px' }}
+               onClick={closeEditor}>
+               <i className="bx bx-x"></i>
+            </Link>
+            <Editor setData={setData} article={data} images={articleImages} />
+         </>
 
-      </>
-   )
+      )
+   }
+   else
+      return (
+         <>
+            {data.img &&
+               <FullBleed className='full-bleed article-image' >
+                  <img src={data.img} alt='article' />
+               </FullBleed>
+            }
+            <ArticleContainer className='container-padding article-container'>
+               <ArticleTextContent className="article-content">
+                  <ArticleCoverImg className="article-cover" src={data.img} alt="article" />
+                  <BigHeading>{data.title}</BigHeading>
+                  <MarkdownRenderer>
+                     {data.content}
+                  </MarkdownRenderer>
+                  <a href={data.author_link}><p className="author">{data.author}</p></a>
+               </ArticleTextContent>
+               <ArticleButtons className="article-buttons">
+
+                  <Link
+                     className="delete button"
+                     placement="left"
+                     smallPadding={true}
+                     hoverBg="#f73a64"
+                     warning={true}
+                     onClick={() => deleteArticle()}
+                     style={{ border: 'none' }}
+                  >
+                     <i className='bx bxs-trash'></i> Delete
+                  </Link>
+                  <Link
+                     className="edit button"
+                     placement="right"
+                     smallPadding={true}
+                     onClick={openEditor}
+                     style={{ border: 'none' }}
+                  >
+                     <i className='bx bxs-pencil'></i> Edit
+                  </Link>
+               </ArticleButtons>
+
+               <ImageViewer images={articleImages} />
+            </ArticleContainer>
+            <div className="container-padding">
+               <Comment comments={data.comments} id={data._id} setData={setData} />
+               <h1>Other Articles</h1>
+               <ShowArticles articles={filteredData(allArticles, id)} />
+            </div>
+
+         </>
+      )
 }
 
 export default Article

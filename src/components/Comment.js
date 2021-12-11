@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Avatar, AvatarBg, CommentInfo, Container, Heading, UserComment } from './commentElements'
-import { Button, Form, TextArea, TextInput } from './formElements'
+import { Form, Link, TextArea, TextInput } from './formElements'
 import FlipMove from 'react-flip-move';
 
 
@@ -30,9 +30,9 @@ const Comment = ({ comments, id, setData }) => {
                },
                body: JSON.stringify(commentData)
             })
-            const req = await res.json()
-            console.log(req);
-            setData(req)
+            const result = await res.json()
+            // console.log(result);
+            setData(result)
             clearForm();
 
          } catch (error) {
@@ -80,7 +80,7 @@ const Comment = ({ comments, id, setData }) => {
                onChange={e => setCommentData({ ...commentData, comment: e.target.value })}
                value={commentData.comment}
             />
-            <Button placement="right" onClick={() => { postComment() }} >Comment</Button>
+            <Link placement="right" onClick={() => { postComment() }} >Comment</Link>
          </Form>
 
       </Container>

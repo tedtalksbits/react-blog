@@ -2,9 +2,13 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
    margin: 1rem 0;
+   background: ${props => props.theme.accent};
+   padding: 1rem;
+   border-radius: 20px;
+   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 `
-export const Heading = styled.h4`
-   border-bottom: 1px ${({ theme }) => theme.textalpha} solid;
+export const Heading = styled.h3`
+   border-bottom: 1px ${({ theme }) => theme.accent} solid;
    padding-bottom: 1rem;
 `
 export const AvatarBg = styled.div`

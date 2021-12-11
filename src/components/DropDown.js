@@ -1,10 +1,8 @@
-import React, { Children, useReducer } from 'react'
+import React, { useReducer } from 'react'
 import styled from 'styled-components'
 import { CSSTransition } from 'react-transition-group'
-import { Button } from './formElements'
-const Container = styled.div`
+import { Link } from './formElements'
 
-`
 
 const Content = styled.div`
    /* transition: all .5s cubic-bezier(0.55, 0.085, 0.68, 0.53);
@@ -33,7 +31,7 @@ const DropDown = ({ children }) => {
    )
    return (
       <div className='dropdown'>
-         <Button onClick={handleOpen}>More Images</Button>
+         <Link onClick={handleOpen}>Additional Images</Link>
 
 
          <CSSTransition
