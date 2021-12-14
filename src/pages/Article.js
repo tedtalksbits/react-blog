@@ -10,6 +10,7 @@ import ImageViewer from "../components/ImageViewer";
 import AnimatedAlert from "../components/AnimatedAlert";
 import MarkdownRenderer from "../components/MarkdownRenderer";
 import Editor from "../components/Editor";
+import Toast from "../components/Toast";
 
 const FullBleed = styled.div`
 
@@ -107,11 +108,10 @@ const Article = () => {
    const [allArticles, setAllArticles] = useState([])
    const [deleteMsg, setDeleteMsg] = useState("");
    const [showEditor, setShowEditor] = useState(false);
-
+   const [deleteSuccess, setDeleteSuccess] = useState(false);
 
 
    const fetchArticle = async () => {
-
       try {
          const res = await fetch(API, {
             method: 'GET'
@@ -143,25 +143,27 @@ const Article = () => {
 
    const deleteArticle = async () => {
 
-      const delArticle = window.confirm("are your sure?");
+      const confirmed = window.confirm("are your sure?");
 
-      if (delArticle) {
+      if (confirmed) {
 
          try {
-            const res = await fetch(API, {
+            await fetch(API, {
                method: 'DELETE'
             })
-            // const result = await res.json();
-            // console.log(result)
+
             setData('')
             setDeleteMsg("Article Deleted Successfully!")
+            setDeleteSuccess(true)
+            setTimeout(() => {
+               setDeleteSuccess(false)
+            }, 3000);
          } catch (error) {
             console.log(error);
          }
       }
       else return
    }
-
 
    const filteredData = (arrays, id) => {
       return arrays.filter(array => array._id !== id)
@@ -184,9 +186,14 @@ const Article = () => {
    if (!data) {
       return (
          <>
-            <AnimatedAlert >
+            <Toast
+               message="Success"
+               type="success"
+               toggle={deleteSuccess}
+
+            >
                <p>{deleteMsg}</p>
-            </AnimatedAlert>
+            </Toast>
             <h1>Other Articles</h1>
             <ShowArticles articles={filteredData(allArticles, id)} />
          </>
@@ -195,13 +202,11 @@ const Article = () => {
    if (showEditor) {
       return (
          <>
-            <Link
-               placement="right"
-               smallPadding={true}
-               style={{ borderRadius: '1000px' }}
+            <div
+               style={{ borderRadius: '1000px', fontSize: '3rem', marginLeft: 'auto', cursor: 'pointer' }}
                onClick={closeEditor}>
                <i className="bx bx-x"></i>
-            </Link>
+            </div>
             <Editor setData={setData} article={data} images={articleImages} />
          </>
 

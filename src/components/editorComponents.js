@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const EditorApp = styled.div`
       padding: 0 1rem;
+      position: relative;
 `
 
 export const EditImageContainer = styled.div`

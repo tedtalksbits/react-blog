@@ -4,8 +4,8 @@ import { Link } from './formElements';
 
 const Alert = styled.main`
    display: ${({ removeElement }) => (removeElement ? 'none' : 'block')};
-   border:  ${props => props.theme.accent} 1px solid;
-   background: ${props => props.theme.success};
+   border:  ${props => props.theme.success} 1px solid;
+   background: ${props => props.theme.accent};
    padding: 1em;
    border-radius: .675rem;
    color: white;
@@ -62,10 +62,13 @@ const AnimatedAlert = ({ children, showAlert }) => {
    // }
 
    const removeElement = () => {
-      setShow(false);
-      setTimeout(() => {
-         setRemoveState(true)
-      }, 400)
+      if (showAlert === false) {
+
+         setShow(false);
+         setTimeout(() => {
+            setRemoveState(true)
+         }, 400)
+      }
    }
    return (
       <div>

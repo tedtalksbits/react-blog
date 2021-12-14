@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Anime, { anime } from 'react-anime'
+
 const Grid = styled.div`
-   
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
    grid-gap: 1rem;
@@ -17,8 +17,6 @@ const Grid = styled.div`
 
 `
 const ArticleCard = styled.div`
-   
-   /* padding: 1rem 12px; */
    margin: 2rem auto;
    max-width: 500px;
 
@@ -32,21 +30,13 @@ const ArticleCard = styled.div`
       align-items: center;
       justify-content: space-between;
    }
-
+   h1{
+      text-transform: capitalize;
+   }
 
 `
 const ShowArticles = ({ articles, setData }) => {
 
-   // const API = `http://localhost:5020/articles/`;
-
-   // const deleteArticle = async (id) => {
-   //    const res = await fetch(API + id, {
-   //       method: 'DELETE'
-   //    })
-
-   //    const result = await res.json()
-   //    setData(result)
-   // }
    return (
       <Grid>
          <Anime easing="easeOutElastic"
@@ -66,7 +56,6 @@ const ShowArticles = ({ articles, setData }) => {
                         <p className='light'>{article.author}</p>
                      </div>
                      <h1>{article.title}</h1>
-                     {/* <p>{article.content.substring(0, 150)}...</p> */}
                   </ArticleCard>
                </Link>
 

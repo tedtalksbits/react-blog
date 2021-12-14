@@ -2,11 +2,12 @@
 import React from 'react'
 import { useState } from 'react'
 import styled from 'styled-components'
-import AnimatedAlert from '../components/AnimatedAlert'
 import { BigHeading } from '../components/bigHeading'
+import Box from '../components/Box'
 import { Container } from '../components/commentElements'
 import { Form, InputItem, Link, TextArea, TextInput } from '../components/formElements'
 import ShowArticles from '../components/ShowArticles'
+import Toast from '../components/Toast'
 
 const Page = styled.div`
    height: 100vh;
@@ -16,12 +17,16 @@ const Page = styled.div`
 
 `
 const HomePost = styled.div`
-   display: grid;
+   display: block;
    grid-template-columns: .3fr .7fr;
    
    height: 100vh;
    &#home-post{
       grid-column: 1 / 4;
+   }
+
+   @media screen and (min-width: 650px){
+      display: grid;
    }
 `
 const GradientSection = styled.section`
@@ -49,32 +54,67 @@ const FormContainer = styled(Container)`
 `
 const HomePage = () => {
    const [postedArticle, setPostedArticle] = useState([])
+   const [postSuccess, setPostSuccess] = useState(false)
+   const [showWarning, setShowWarning] = useState(false)
    const [newPost, setNewPost] = useState({
       author: "",
       author_link: "",
       img: "",
-      additional_img: [],
+      additional_img: "",
       title: "",
       content: "",
       content_link: ""
    })
 
-   const postData = async () => {
-
-      const res = await fetch('http://localhost:5020/articles', {
-         method: 'POST',
-         headers: {
-            "Content-Type": "application/json"
-         },
-         body: JSON.stringify(newPost)
+   const resetForm = () => {
+      setNewPost({
+         author: "",
+         author_link: "",
+         img: "",
+         additional_img: "",
+         title: "",
+         content: "",
+         content_link: ""
       })
-
-      const result = await res.json();
-      setPostedArticle([result])
    }
 
+   const postData = async () => {
 
+      if (newPost.author && newPost.content && newPost.title) {
 
+         try {
+            const res = await fetch('http://localhost:5020/articles', {
+               method: 'POST',
+               headers: {
+                  "Content-Type": "application/json"
+               },
+               body: JSON.stringify(newPost)
+            })
+
+            const result = await res.json();
+            setPostedArticle([result])
+            setShowWarning(false)
+            setPostSuccess(true)
+            resetForm()
+
+            setTimeout(() => {
+               setPostSuccess(false)
+            }, 3000);
+
+         } catch (error) {
+            console.log(error);
+         }
+      }
+      else {
+
+         setShowWarning(true)
+         setTimeout(() => {
+            setShowWarning(false)
+         }, 3000);
+         return
+      }
+
+   }
 
    return (
       <>
@@ -93,12 +133,21 @@ const HomePage = () => {
 
          >
             <GradientSection className="gradient-section">
-
                <BigHeading>Post an Article</BigHeading>
             </GradientSection>
 
             <FormContainer className="form-container">
-               <Form style={{ width: '100%', maxWidth: '100%', margin: 0 }}>
+
+               <Form style={{ width: '100%', maxWidth: '900px', margin: '0 auto' }} id='homeForm'>
+                  {showWarning &&
+                     <Box type="warning" message='warning!'>
+                        <>Articles must include:
+                           <span className='bold'> author, </span>
+                           <span className='bold'>title, </span>
+                           <span className='bold'>and content.</span>
+                        </>
+                     </Box>
+                  }
                   <InputItem className="input-item">
 
                      <label htmlFor="author">Author</label>
@@ -123,6 +172,7 @@ const HomePage = () => {
 
                      <label htmlFor="title">Title</label>
                      <TextInput
+                        required
                         id="title"
                         name="title"
                         onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
@@ -139,20 +189,26 @@ const HomePage = () => {
                         rows="12"
                      />
                   </InputItem>
-                  <InputItem className="input-item">
 
+                  <InputItem className="input-item">
                      <Link width="content" onClick={postData} >Post</Link>
                   </InputItem>
+
                </Form>
             </FormContainer>
-            {!postedArticle.length == 0 &&
-               <AnimatedAlert>
-                  <h1>Article posted</h1>
-                  <ShowArticles articles={postedArticle} />
-               </AnimatedAlert>
-            }
+
 
          </HomePost>
+         <>
+
+            {postSuccess &&
+               <Toast type="success" toggle={postSuccess} message='Success'>
+                  <h3>Article posted</h3>
+                  <ShowArticles articles={postedArticle} />
+               </Toast>
+
+            }
+         </>
 
       </>
    )

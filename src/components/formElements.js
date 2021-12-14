@@ -31,8 +31,8 @@ export const TextInput = styled.input`
 `
 
 export const Link = styled.a`
-   color:${props => props.hoverBg || props.theme.primary};
-   background: ${props => props.Bg || props.theme.white};
+   color:${props => props.theme.background};
+   background: ${props => props.Bg || props.theme.primary};
    border: 1px ${({ theme }) => theme.textalpha2} solid;
    padding: ${({ smallPadding }) => smallPadding ? '.45em 1.2em' : '.875em 2.2em'};
    font-size: 1em;
@@ -60,7 +60,7 @@ export const Link = styled.a`
    }
 
    :hover{
-      background: ${props => props.hoverBg || props.theme.primary};
+      background: ${props => props.hoverBg || props.theme.textalpha};
       color: ${props => props.hoverColor || props.theme.background};
       
    }

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import ReactMarkdown from 'react-markdown'
 const Wrapper = styled.div`
    h1,h2,h3,h4{
-      margin: 2.25rem 0 1.2rem;
+      margin: 3.5rem 0 1rem;
    }
    p{
       color: ${props => props.theme.text};
@@ -29,10 +29,17 @@ const Wrapper = styled.div`
       display: flex;
       align-items: center;
       p{
-
          color: ${props => props.theme.textalpha};
       }
 
+   }
+   li{
+      list-style: inherit;
+      font-size: 1.2rem;
+      line-height: 1.5;
+   }
+   p{
+      line-height: 1.6;
    }
 
 `

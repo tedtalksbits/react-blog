@@ -18,7 +18,7 @@ const About = () => {
       <AboutTheme className='container-padding' style={{ fontSize: '1.4rem' }}>
          <BigHeading>About</BigHeading>
 
-         <h1>Using react to create a full stack blogging site</h1>
+         <h1>Using React To Create a Simple Full Stack Blogging Site</h1>
 
          <h2>Technologies Used:</h2>
          <ul>
@@ -30,7 +30,7 @@ const About = () => {
             </ul>
             <li><h3>📜JS</h3></li>
             <ul>
-               <li>Fetch</li>
+               <li>Fetch API</li>
                <li>ES6</li>
             </ul>
             <li><h3>𝌔Node & Express</h3></li>

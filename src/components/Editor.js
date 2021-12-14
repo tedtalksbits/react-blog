@@ -3,6 +3,7 @@ import { Link, TextArea, TextInput } from './formElements'
 import styled, { css } from 'styled-components'
 import { EditImage, EditImageContainer, EditImageGrid, EditorApp, Label, InputItem } from './editorComponents'
 import { post } from '../api/article'
+import Toast from './Toast'
 
 export const formItemMargin = css`
    margin: .5rem 0;
@@ -41,17 +42,34 @@ const Editor = ({ article, images, setData }) => {
    const [editArticle, setEditArticle] = useState({
       ...article
    })
-
+   const [editSuccess, setEditSuccess] = useState(false)
    const save = async () => {
       const { _id } = article;
       const update = await post(editArticle, `http://localhost:5020/articles/${_id}`)
       setData(update);
+      setEditSuccess(true)
+      setTimeout(() => {
+
+         setEditSuccess(false)
+      }, 3000);
 
    }
 
 
    return (
       <EditorApp className="editor">
+
+         <div className="notification" style={{ overflow: 'hidden' }}>
+
+            {editSuccess &&
+               <Toast
+                  type="success"
+                  toggle={editSuccess}
+                  message={"success"} >
+                  <h3>Saved Changes</h3>
+               </Toast>}
+
+         </div>
          <h1>Editor</h1>
          <div className="editor-inputs">
             <FormItem className="input-item">
@@ -110,6 +128,9 @@ const Editor = ({ article, images, setData }) => {
                   rows='30'
                />
             </div>
+            <div className="save-edit">
+               <Link onClick={save}>Save</Link>
+            </div>
          </div>
          <EditImageGrid className="imgs">
 
@@ -123,13 +144,7 @@ const Editor = ({ article, images, setData }) => {
 
          </EditImageGrid>
 
-         <div className="save-edit">
-            {/* <>
-               {isEditing && <h1>editing...</h1>}
-               {content !== "" && <Link>Save</Link>}
-            </> */}
-            <Link onClick={save}>Save</Link>
-         </div>
+
 
       </EditorApp>
    )
