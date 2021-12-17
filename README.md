@@ -20,4 +20,5 @@
 ![picture alt](./src/screenshots/screen1.png "screen shot #1 of app ")
 ![picture alt](./src/screenshots/screen2.png "screen shot #2 of app ")
 ![picture alt](./src/screenshots/screen3.png "screen shot #3 of app ")
+![gif](https://i.postimg.cc/CMtQD6TF/bloggio.gif)
 
