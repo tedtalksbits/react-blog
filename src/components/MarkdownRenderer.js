@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import ReactMarkdown from 'react-markdown'
 const Wrapper = styled.div`
+   max-width: 60ch;
+   margin: auto;
+
    h1,h2,h3,h4{
       margin: 3.5rem 0 1rem;
    }
@@ -40,6 +43,11 @@ const Wrapper = styled.div`
    }
    p{
       line-height: 1.6;
+   }
+   > * a{
+      margin: 1rem 0;
+      text-decoration: underline;
+      color: #0066ff;
    }
 
 `

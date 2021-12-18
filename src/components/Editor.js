@@ -137,7 +137,7 @@ const Editor = ({ article, images, setData }) => {
             {images.map((el, key) => (
                <EditImageContainer className="img-edit">
                   <EditImage className="imgs" key={key} src={el} />
-                  <Input type="text" value={el} imgInput={true} onChange={(e) => setEditArticle({ ...editArticle, additional_img: e.target.value })} />
+                  {/* <Input type="text" value={el} imgInput={true} onChange={(e) => setEditArticle({ ...editArticle, additional_img: e.target.value })} /> */}
                </EditImageContainer>
 
             ))}

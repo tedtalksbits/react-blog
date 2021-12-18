@@ -223,7 +223,7 @@ const Article = () => {
             <ArticleContainer className='container-padding article-container'>
                <ArticleTextContent className="article-content">
                   <ArticleCoverImg className="article-cover" src={data.img} alt="article" />
-                  <BigHeading>{data.title}</BigHeading>
+                  <BigHeading style={{ textAlign: 'center' }}>{data.title}</BigHeading>
                   <MarkdownRenderer>
                      {data.content}
                   </MarkdownRenderer>
