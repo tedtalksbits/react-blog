@@ -11,11 +11,13 @@ import { darkTheme, lightTheme } from './data/appThemes';
 import Switch from './components/Switch';
 import useLocalStorageState from 'use-local-storage-state';
 import bgImgage from './images/gradbg.png'
-import Edit from './pages/Edit';
+import Post from './pages/Post';
 const GlobalStyles = createGlobalStyle`
 
 body {
-   
+   > * {
+    transition: all 0.25s linear;
+   }
     background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.text};
     transition: all 0.25s linear;
@@ -60,7 +62,7 @@ const BlogApp = styled.main`
 function App() {
   const dark = darkTheme;
   const light = lightTheme;
-  const [theme, setTheme] = useLocalStorageState("theme", dark)
+  const [theme, setTheme] = useLocalStorageState("theme", dark || darkTheme)
   const [toggle, setToggle] = useLocalStorageState("toggle", true)
 
   const handleTheme = () => {
@@ -86,7 +88,7 @@ function App() {
             <Route path="/article/:id" element={<Article />} />
             <Route path="/article-list" element={<ArticleList />} />
             <Route path="/about" element={<About />} />
-            <Route path="/edit" element={<Edit />} />
+            <Route path="/post" element={<Post />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </BlogApp>

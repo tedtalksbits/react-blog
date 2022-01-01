@@ -31,18 +31,20 @@ const Controls = styled.i`
    &.active{
       color: ${({ theme }) => theme.primary};
       border: 1px solid ${({ theme }) => theme.primary}aa;
-   box-shadow: 2px 4px 10px 3px ${({ theme }) => theme.primary}21;
+      box-shadow: 2px 4px 10px 3px ${({ theme }) => theme.primary}21;
    }
 
 `
 const ImagesContainer = styled.div`
-   img.left{
+   overflow: hidden;
+   img.slide-left{
       animation: left .5s ease forwards;
    }
+   
 
    @keyframes left {
-      0%{opacity: 0};
-      100%{opacity: 1};
+      0%{opacity: 0; transform: scale(1)};
+      100%{opacity: 1; transform: scale(1.1)};
    }
 `
 const ImageViewer = ({ images }) => {
@@ -61,6 +63,10 @@ const ImageViewer = ({ images }) => {
       }
    }
 
+   const [rerender, setRerender] = useState(false)
+   useEffect(() => {
+      setRerender((prev) => !prev)
+   }, [count])
 
    if (images.length === 0) {
       return <NoImageText>no images</NoImageText>
@@ -94,13 +100,13 @@ const ImageViewer = ({ images }) => {
 
             <div className="article-imgs img-slide-show">
                <div className="chevron-container">
-                  <Chevron clickFunction={() => handleDecr()} />
-                  <Chevron clickFunction={() => handleIncr()} opposite={true} />
+                  <Chevron clickFunction={() => handleDecr()} left={true} />
+                  <Chevron clickFunction={() => handleIncr()} right={true} />
                </div>
 
                <p style={{ textAlign: 'center' }}>{count + 1}/{images.length}</p>
                <ImagesContainer className="article-imgs-container" >
-                  <img className='slide-img' key='1' src={images[count]} alt="article" />
+                  <img className={count + 1} key='1' src={images[count]} alt="article" />
                </ImagesContainer>
             </div>
          }

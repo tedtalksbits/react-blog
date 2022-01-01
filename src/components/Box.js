@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Container = styled.article`
+export const Container = styled.article`
 
    background: ${props => props.theme.accent};
    padding: 1rem;

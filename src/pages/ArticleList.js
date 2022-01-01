@@ -9,6 +9,7 @@ const ArticleList = () => {
    const [data, setData] = useState([]);
    const [isLoading, setIsLoading] = useState(true);
 
+
    const fetchArticles = async () => {
       try {
          const res = await fetch(API, {
@@ -24,8 +25,6 @@ const ArticleList = () => {
 
    }
 
-
-
    useEffect(() => {
       fetchArticles()
    }, [])
@@ -38,7 +37,7 @@ const ArticleList = () => {
    return (
 
       <div className='container-padding'>
-         <BigHeading>Article List</BigHeading>
+         <BigHeading >Article List</BigHeading>
          <ShowArticles articles={data} setData={setData} />
       </div>
    )

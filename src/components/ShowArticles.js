@@ -19,6 +19,7 @@ const Grid = styled.div`
 const ArticleCard = styled.div`
    margin: 2rem auto;
    max-width: 500px;
+   transition: all ease .25s;
 
    .light{
       margin: .45rem 0;
@@ -35,7 +36,7 @@ const ArticleCard = styled.div`
    }
 
 `
-const ShowArticles = ({ articles, setData }) => {
+const ShowArticles = ({ articles }) => {
 
    return (
       <Grid>

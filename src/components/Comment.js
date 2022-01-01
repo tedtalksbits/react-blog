@@ -52,21 +52,21 @@ const Comment = ({ comments, id, setData }) => {
    return (
       <Container className='comment-container'>
          <Heading className='comment-heading'>Comments</Heading>
-         <FlipMove>
 
-            {comments.map((comment, key) => (
-               <CommentInfo className='comment-info' key={key}>
-                  <AvatarBg>
-                     <Avatar className='comment-user-avatar' src={comment.avatar} />
-                  </AvatarBg>
-                  <UserComment className='comment-user-comment-container'>
-                     <h4 className='comment-user-username'>{comment.username}</h4>
-                     <p className='comment-user-comment'>{comment.comment}</p>
-                  </UserComment>
 
-               </CommentInfo>
-            ))}
-         </FlipMove>
+         {comments.map((comment, key) => (
+            <CommentInfo className='comment-info' key={key}>
+               <AvatarBg>
+                  <Avatar className='comment-user-avatar' src={comment.avatar} />
+               </AvatarBg>
+               <UserComment className='comment-user-comment-container'>
+                  <h4 className='comment-user-username'>{comment.username}</h4>
+                  <p className='comment-user-comment'>{comment.comment}</p>
+               </UserComment>
+
+            </CommentInfo>
+         ))}
+
          <Form className='comment-form'>
             <TextInput
                type='text'

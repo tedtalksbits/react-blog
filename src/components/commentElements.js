@@ -25,7 +25,7 @@ export const Avatar = styled.img`
    height: 40px;
    object-fit: contain;
    border-radius: 10px;
-   
+   transition: all ease .25s;
    
 `
 
@@ -33,6 +33,7 @@ export const CommentInfo = styled.div`
    display: flex;
    align-items: center;
    margin-top: 1.2rem;
+   transition: all ease .25s;
 `
 export const UserComment = styled.div`
    p{

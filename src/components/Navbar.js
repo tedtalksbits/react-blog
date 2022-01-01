@@ -114,6 +114,9 @@ const Navbar = ({ toggler }) => {
                      <NavbarLink to="/article-list" activeclassname='active'>Articles</NavbarLink>
                   </LinkItem>
                   <LinkItem className="nav__link">
+                     <NavbarLink to="/post" activeclassname='active'>Post</NavbarLink>
+                  </LinkItem>
+                  <LinkItem className="nav__link">
                      <NavbarLink to="/about" activeclassname='active'>About</NavbarLink>
                   </LinkItem>
                </Links>
@@ -131,6 +134,9 @@ const Navbar = ({ toggler }) => {
             </LinkItem>
             <LinkItem className="nav__link">
                <NavbarLink to="/article-list" activeclassname='active'>Articles</NavbarLink>
+            </LinkItem>
+            <LinkItem className="nav__link">
+               <NavbarLink to="/post" activeclassname='active'>Post</NavbarLink>
             </LinkItem>
             <LinkItem className="nav__link">
                <NavbarLink to="/about" activeclassname='active'>About</NavbarLink>

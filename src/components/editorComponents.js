@@ -1,8 +1,15 @@
 import styled from "styled-components";
 
 export const EditorApp = styled.div`
-      padding: 0 1rem;
-      position: relative;
+   padding: 0 1rem;
+   position: relative;
+   transition: all ease .25s;
+   animation: editor cubic-bezier(0.18, 0.89, 0.32, 1.28) .25s forwards .15s;
+   animation-fill-mode: both;
+   @keyframes editor{
+      0%{opacity: 0; transform: scaleX(.90)}
+      100%{opacity: 1; transform: scaleX(1)}
+   }
 `
 
 export const EditImageContainer = styled.div`

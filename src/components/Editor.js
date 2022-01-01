@@ -75,6 +75,7 @@ const Editor = ({ article, images, setData }) => {
             <FormItem className="input-item">
                <Label htmlFor="author"><i className='bx bxs-user'></i> Author</Label>
                <FormInput type="text"
+                  autoFocus
                   name="author"
                   id="author"
                   value={editArticle.author}
@@ -135,7 +136,7 @@ const Editor = ({ article, images, setData }) => {
          <EditImageGrid className="imgs">
 
             {images.map((el, key) => (
-               <EditImageContainer className="img-edit">
+               <EditImageContainer className="img-edit" key={key}>
                   <EditImage className="imgs" key={key} src={el} />
                   {/* <Input type="text" value={el} imgInput={true} onChange={(e) => setEditArticle({ ...editArticle, additional_img: e.target.value })} /> */}
                </EditImageContainer>

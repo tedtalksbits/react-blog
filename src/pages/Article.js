@@ -11,6 +11,7 @@ import AnimatedAlert from "../components/AnimatedAlert";
 import MarkdownRenderer from "../components/MarkdownRenderer";
 import Editor from "../components/Editor";
 import Toast from "../components/Toast";
+import Chevron from "../components/Chevron";
 
 const FullBleed = styled.div`
 
@@ -23,6 +24,13 @@ const FullBleed = styled.div`
       height: 20rem;
       opacity: .5;
       mix-blend-mode: soft-light;
+      transition: all ease 3.25s;
+      animation: smoothImage 2s ease forwards .15s;
+      animation-fill-mode: both;
+      @keyframes smoothImage {
+         from{opacity: 0};
+         to{opacity: .5};
+      }
    }
 
    ::after{
@@ -33,6 +41,7 @@ const FullBleed = styled.div`
       position: absolute;
       bottom: 0;
       left: 0;
+      transition: all .25s ease;
       
    }
 
@@ -41,26 +50,27 @@ const ArticleTextContent = styled.article`
    min-height: 50vh;
 `
 const ArticleContainer = styled.div`
-  z-index: 1;
+   transition: all .25s ease;
+   z-index: 1;
 
-  p.author{
-     margin: 1.2rem 0 3rem;
-     color: ${({ theme }) => theme.textalpha2};
-     text-decoration: underline;
-  }
-  span{
-     padding: 6px 12px;
-     border-radius: 20px;
-     background: ${({ theme }) => theme.primary};
-     color: ${({ theme }) => theme.background};
-     margin: 0 1rem 1rem 0;
-  }
-  .tags{
-     margin-bottom: 1rem;
-     display: flex;
-     flex-wrap: wrap;
-  }
-  .container{
+   p.author{
+      margin: 1.2rem 0 3rem;
+      color: ${({ theme }) => theme.textalpha2};
+      text-decoration: underline;
+   }
+   span{
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: ${({ theme }) => theme.primary};
+      color: ${({ theme }) => theme.background};
+      margin: 0 1rem 1rem 0;
+   }
+   .tags{
+      margin-bottom: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+   }
+   .container{
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       grid-gap: 1rem;
@@ -92,7 +102,7 @@ const ArticleContainer = styled.div`
 
 const ArticleCoverImg = styled.img`
    &.article-cover{height: 350px;}
-
+   
 `
 const ArticleButtons = styled.div`
    display: flex;
@@ -109,7 +119,6 @@ const Article = () => {
    const [deleteMsg, setDeleteMsg] = useState("");
    const [showEditor, setShowEditor] = useState(false);
    const [deleteSuccess, setDeleteSuccess] = useState(false);
-
 
    const fetchArticle = async () => {
       try {
@@ -220,10 +229,10 @@ const Article = () => {
                   <img src={data.img} alt='article' />
                </FullBleed>
             }
-            <ArticleContainer className='container-padding article-container'>
+            <ArticleContainer className='container-padding article-container' id="article-top">
                <ArticleTextContent className="article-content">
                   <ArticleCoverImg className="article-cover" src={data.img} alt="article" />
-                  <BigHeading style={{ textAlign: 'center' }}>{data.title}</BigHeading>
+                  <h1 style={{ textAlign: 'center', fontSize: '2.2rem' }}>{data.title}</h1>
                   <MarkdownRenderer>
                      {data.content}
                   </MarkdownRenderer>
@@ -259,6 +268,10 @@ const Article = () => {
                <Comment comments={data.comments} id={data._id} setData={setData} />
                <h1>Other Articles</h1>
                <ShowArticles articles={filteredData(allArticles, id)} />
+               <a href="#article-top" className="article-scroll-up">
+                  <Chevron up={true} />
+
+               </a>
             </div>
 
          </>

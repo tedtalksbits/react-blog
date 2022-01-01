@@ -7,6 +7,7 @@ import Box from '../components/Box'
 import { Container } from '../components/commentElements'
 import { Form, InputItem, Link, TextArea, TextInput } from '../components/formElements'
 import ShowArticles from '../components/ShowArticles'
+import SignIn from '../components/SignIn'
 import Toast from '../components/Toast'
 
 const Page = styled.div`
@@ -30,7 +31,11 @@ const HomePost = styled.div`
    }
 `
 const GradientSection = styled.section`
-   background: linear-gradient(140deg, #03001e 0%, #7303c0 33%, #ec38bc 66%, #03001e 100%);
+   transition: all ease .25s;
+   background: url('https://images.unsplash.com/photo-1557264322-b44d383a2906?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80');
+   background-repeat: no-repeat;
+   background-position: center center;
+   background-size: cover; 
    display: grid;
    place-content: center;
    text-align: center;
@@ -39,10 +44,35 @@ const GradientSection = styled.section`
    }
 `
 const Hero = styled(Page)`
+   transition: all ease .25s;
    background: url(${props => props.theme.hero}) center center;
    background-repeat: no-repeat;
    width: 100%;
    background-size: cover;
+
+   .center-home-welcome{
+      animation: heading .8s ease forwards .35s;
+      animation-fill-mode: both;
+      transition: all ease .25s;
+
+
+
+   @keyframes heading {
+      0%{
+         letter-spacing: -10px;
+         opacity: 0;
+         transform: translateY(10px);
+      };
+      20%{
+         opacity: 0;
+      }
+      100%{
+         letter-spacing: 0;
+         opacity: 1;
+         transform: translateY(0);
+      };
+   }
+}
 
 `
 const FormContainer = styled(Container)`
@@ -121,7 +151,7 @@ const HomePage = () => {
          <Hero className='container-padding full-bleed' >
             <div className="center-home-div" style={{ marginBottom: '10rem' }}>
                <BigHeading hero={true} style={{ margin: '0' }}>Bloggio</BigHeading>
-               <h2 style={{ marginTop: '1.4rem' }}>Welcome To The Web Dev Blog!</h2>
+               <h2 style={{ marginTop: '1.4rem' }} className='center-home-welcome'>Welcome To The Web Dev Blog!</h2>
                <Link width='content' href="#home-post">Post An Article</Link>
             </div>
          </Hero>
@@ -136,7 +166,10 @@ const HomePage = () => {
                <BigHeading>Post an Article</BigHeading>
             </GradientSection>
 
-            <FormContainer className="form-container">
+            <SignIn />
+
+
+            {/* <FormContainer className="form-container">
 
                <Form style={{ width: '100%', maxWidth: '900px', margin: '0 auto' }} id='homeForm'>
                   {showWarning &&
@@ -195,7 +228,7 @@ const HomePage = () => {
                   </InputItem>
 
                </Form>
-            </FormContainer>
+            </FormContainer> */}
 
 
          </HomePost>

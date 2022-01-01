@@ -31,17 +31,15 @@ const Container = styled.div`
 
 
 `
-const Chevron = ({ opposite, clickFunction }) => {
+const Chevron = ({ left, clickFunction, up, right, down }) => {
    return (
       <Container onClick={clickFunction}>
+         {up && <i className='bx bxs-chevron-up'></i>}
+         {right && <i className='bx bxs-chevron-right'></i>}
+         {left && <i className='bx bxs-chevron-left' ></i>}
+         {down && <i className='bx bxs-chevron-down' ></i>}
 
-         {opposite ?
 
-            <i className='bx bxs-chevron-right'></i>
-            :
-
-            <i className='bx bxs-chevron-left' ></i>
-         }
 
 
       </Container>
